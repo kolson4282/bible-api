@@ -3,7 +3,9 @@
 package model
 
 type Character struct {
-	ID int `json:"id"`
+	ID          int    `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }
 
 type NewCharacter struct {

@@ -10,20 +10,33 @@ import (
 )
 
 func TestCharacters(t *testing.T) {
-
 	c := client.New(handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolver.Resolver{}})))
-	var resp struct {
-		Characters []struct {
-			ID int
+
+	t.Run("Get All Characters", func(t *testing.T) {
+		var resp struct {
+			Characters []struct {
+				ID          int
+				Name        string
+				Description string
+			}
 		}
-	}
-	q := `{
-		characters {
-			id
-		}
+		q := `
+		{
+			characters {
+				id
+				name
+				description
+			}
 		}`
-	c.MustPost(q, &resp)
-	if resp.Characters[0].ID != 0 {
-		t.Error("error")
-	}
+		c.MustPost(q, &resp)
+		if len(resp.Characters) == 0 {
+			t.Error("no characters returned")
+		}
+		for i, char := range resp.Characters {
+			if char.Name == "" {
+				t.Errorf("Invalid character name at postion %d", i)
+			}
+		}
+	})
+
 }
