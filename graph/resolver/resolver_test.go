@@ -6,11 +6,14 @@ import (
 	"github.com/99designs/gqlgen/client"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/kolson4282/tdd-bible-api/graph/generated"
+	"github.com/kolson4282/tdd-bible-api/graph/model"
 	"github.com/kolson4282/tdd-bible-api/graph/resolver"
 )
 
 func TestCharacters(t *testing.T) {
-	c := client.New(handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolver.Resolver{}})))
+	c := client.New(handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolver.Resolver{
+		Collection: MockCollection{},
+	}})))
 
 	t.Run("Get All Characters", func(t *testing.T) {
 		var resp struct {
@@ -39,4 +42,17 @@ func TestCharacters(t *testing.T) {
 		}
 	})
 
+}
+
+type MockCollection struct {
+}
+
+func (mc MockCollection) GetCharacters() ([]*model.Character, error) {
+	return []*model.Character{
+		{
+			ID:          1,
+			Name:        "God",
+			Description: "God",
+		},
+	}, nil
 }

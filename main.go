@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/kolson4282/tdd-bible-api/dbcollection"
 	"github.com/kolson4282/tdd-bible-api/graph/resolver"
 	"github.com/kolson4282/tdd-bible-api/server"
 )
@@ -15,5 +16,8 @@ func main() {
 		port = defaultPort
 	}
 
-	server.RunServer(port, &resolver.Resolver{})
+	collection := dbcollection.NewDBCollection()
+	server.RunServer(port, &resolver.Resolver{
+		Collection: collection,
+	})
 }

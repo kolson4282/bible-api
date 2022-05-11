@@ -16,13 +16,7 @@ func (r *mutationResolver) CreateCharacter(ctx context.Context, input model.NewC
 }
 
 func (r *queryResolver) Characters(ctx context.Context) ([]*model.Character, error) {
-	return []*model.Character{
-		{
-			ID:          1,
-			Name:        "God",
-			Description: "God",
-		},
-	}, nil
+	return r.Collection.GetCharacters()
 }
 
 // Mutation returns generated.MutationResolver implementation.
