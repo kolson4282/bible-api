@@ -1,8 +1,10 @@
-# Bible API WIP
+# Bible API
 
-Bible API to get bible character data based on chapter and location.
+Bible API to get bible character data based on chapter and location. See graph/schema/schema.graphqls to see the available queries and mutations.
 
 ---
+
+## Database Setup:
 
 run `docker compose up` to start mysql database. Need to have a .env file with the following (can change values, this is just for example):
 

@@ -1,6 +1,10 @@
 package dbcollection
 
-import "github.com/kolson4282/tdd-bible-api/graph/model"
+import (
+	"errors"
+
+	"github.com/kolson4282/tdd-bible-api/graph/model"
+)
 
 func (dc *DBCollection) GetCharacters() ([]*model.Character, error) {
 	var characters []*model.Character
@@ -12,6 +16,12 @@ func (dc *DBCollection) CreateCharacter(newCharacter model.NewCharacter) (*model
 	character := model.Character{
 		Name:        newCharacter.Name,
 		Description: newCharacter.Description,
+	}
+	allCharacters, _ := dc.GetCharacters()
+	for _, char := range allCharacters {
+		if char.Name == character.Name && char.Description == character.Description {
+			return nil, errors.New("character already exists")
+		}
 	}
 	err := dc.DB.Create(&character).Error
 	return &character, err

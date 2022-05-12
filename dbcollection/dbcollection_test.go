@@ -1,5 +1,7 @@
 package dbcollection_test
 
+//dbcollection_test needs to be run with a clean (empty) database
+
 import (
 	"testing"
 
@@ -16,6 +18,7 @@ var DBVARS = dbcollection.DBVars{
 
 func TestCharactersTable(t *testing.T) {
 	dc := dbcollection.NewDBCollection(DBVARS)
+
 	t.Run("Get All Characters", func(t *testing.T) {
 		characters, _ := dc.GetCharacters()
 		if len(characters) == 0 {
@@ -30,6 +33,7 @@ func TestCharactersTable(t *testing.T) {
 			}
 		}
 	})
+
 	t.Run("Create New Character", func(t *testing.T) {
 		newCharacter := model.NewCharacter{
 			Name:        "Adam",
@@ -50,6 +54,28 @@ func TestCharactersTable(t *testing.T) {
 		}
 		if !found {
 			t.Error("Character not added to list of all characters")
+		}
+	})
+
+	t.Run("Can't create new Character if character already exists", func(t *testing.T) {
+		newCharacter := model.NewCharacter{
+			Name:        "Adam",
+			Description: "First Man",
+		}
+		_, err := dc.CreateCharacter(newCharacter)
+
+		if err.Error() != "character already exists" {
+			t.Errorf("tried to create duplicate character")
+		}
+		characters, _ := dc.GetCharacters()
+		found := false
+		for _, char := range characters {
+			if char.Name == newCharacter.Name && char.Description == newCharacter.Description {
+				found = true
+			}
+		}
+		if !found {
+			t.Error("Character was not found in list of all characters")
 		}
 	})
 }
