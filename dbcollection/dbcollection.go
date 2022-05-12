@@ -9,11 +9,20 @@ import (
 )
 
 type DBCollection struct {
-	DB *gorm.DB
+	DB     *gorm.DB
+	DBVars DBVars
 }
 
-func NewDBCollection() *DBCollection {
+type DBVars struct {
+	DB_USER     string
+	DB_PASSWORD string
+	DB_HOST     string
+	DB_NAME     string
+}
+
+func NewDBCollection(DBVars DBVars) *DBCollection {
 	dc := &DBCollection{}
+	dc.DBVars = DBVars
 	dc.initialize()
 	dc.createTables()
 	dc.fillTables()
@@ -21,7 +30,7 @@ func NewDBCollection() *DBCollection {
 }
 
 func (dc *DBCollection) initialize() {
-	db, err := gorm.Open(mysql.Open(getDBURL()), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dc.getDBURL()), &gorm.Config{})
 	dc.DB = db
 	if err != nil {
 		panic("Cannot connect to Database" + err.Error())
@@ -43,10 +52,11 @@ func (dc *DBCollection) fillTables() {
 	})
 }
 
-func getDBURL() string {
-	USER := "user"
-	DB_PASSWORD := "dbpass"
-	HOST := "localhost:3305"
-	DB_NAME := "bible_api"
-	return fmt.Sprintf("%s:%s@tcp(%s)/%s", USER, DB_PASSWORD, HOST, DB_NAME)
+func (dc DBCollection) getDBURL() string {
+
+	DB_USER := dc.DBVars.DB_USER
+	DB_PASSWORD := dc.DBVars.DB_PASSWORD
+	DB_HOST := dc.DBVars.DB_HOST
+	DB_NAME := dc.DBVars.DB_NAME
+	return fmt.Sprintf("%s:%s@tcp(%s)/%s", DB_USER, DB_PASSWORD, DB_HOST, DB_NAME)
 }

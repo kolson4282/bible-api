@@ -6,8 +6,15 @@ import (
 	"github.com/kolson4282/tdd-bible-api/dbcollection"
 )
 
+var DBVARS = dbcollection.DBVars{
+	DB_USER:     "user",
+	DB_PASSWORD: "dbpass",
+	DB_HOST:     "localhost:3305",
+	DB_NAME:     "bible_api",
+}
+
 func TestCharactersTable(t *testing.T) {
-	dc := dbcollection.NewDBCollection()
+	dc := dbcollection.NewDBCollection(DBVARS)
 	characters, _ := dc.GetCharacters()
 	if len(characters) == 0 {
 		t.Fatalf("No Characters Returned")
