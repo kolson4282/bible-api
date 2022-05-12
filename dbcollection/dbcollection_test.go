@@ -101,4 +101,21 @@ func TestCharactersTable(t *testing.T) {
 
 		}
 	})
+
+	t.Run("Get Character by Name", func(t *testing.T) {
+		characters, _ := dc.GetCharacterByName("Adam")
+		if len(characters) == 0 {
+			t.Fatalf("No Characters Returned")
+		}
+		if characters[0].ID != 1 {
+			t.Errorf("Wanted character ID 1, got %d", characters[0].ID)
+		}
+		if characters[0].Name != "Adam" {
+			t.Errorf("Wrong name got %s wanted Adam", characters[0].Name)
+		}
+		if characters[0].Description != "First Man" {
+			t.Errorf("Wrong description got %s wanted First Man", characters[0].Description)
+
+		}
+	})
 }

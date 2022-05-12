@@ -32,3 +32,9 @@ func (dc *DBCollection) GetCharacterByID(id int) ([]*model.Character, error) {
 	dc.DB.Where("id = ?", id).Find(&characters)
 	return characters, nil
 }
+
+func (dc *DBCollection) GetCharacterByName(name string) ([]*model.Character, error) {
+	var characters []*model.Character
+	dc.DB.Where("name LIKE ?", name).Find(&characters)
+	return characters, nil
+}
