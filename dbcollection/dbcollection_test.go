@@ -7,17 +7,17 @@ import (
 
 	"github.com/kolson4282/tdd-bible-api/dbcollection"
 	"github.com/kolson4282/tdd-bible-api/graph/model"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-var DBVARS = dbcollection.DBVars{
-	DB_USER:     "user",
-	DB_PASSWORD: "dbpass",
-	DB_HOST:     "localhost:3305",
-	DB_NAME:     "bible_api",
-}
-
 func TestCharactersTable(t *testing.T) {
-	dc := dbcollection.NewDBCollection(DBVARS)
+	db, err := gorm.Open(mysql.Open("user:dbpass@tcp(localhost:3308)/test_db"), &gorm.Config{})
+	if err != nil {
+		t.Fatalf("error creating database")
+	}
+
+	dc := dbcollection.NewDBCollection(db)
 
 	t.Run("Create New Character", func(t *testing.T) {
 		newCharacter := model.NewCharacter{
@@ -26,7 +26,8 @@ func TestCharactersTable(t *testing.T) {
 		}
 		character, err := dc.CreateCharacter(newCharacter)
 		if err != nil && err.Error() == "character already exists" {
-			t.Skip() //skip if character is already created...
+			t.Log("Character Already created, skipping create character test...")
+			t.SkipNow() //skip if character is already created...
 		}
 		if character.Name != newCharacter.Name {
 			t.Errorf("Character created incorrectly, wanted %s, got %s",

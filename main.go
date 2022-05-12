@@ -1,12 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/kolson4282/tdd-bible-api/dbcollection"
 	"github.com/kolson4282/tdd-bible-api/graph/resolver"
 	"github.com/kolson4282/tdd-bible-api/server"
 	"github.com/kolson4282/tdd-bible-api/utils"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 const defaultPort = "8080"
@@ -21,18 +24,25 @@ func main() {
 		port = defaultPort
 	}
 
+	collection := dbcollection.NewDBCollection(createDatabase())
+	server.RunServer(port, &resolver.Resolver{
+		Collection: collection,
+	})
+}
+
+func createDatabase() *gorm.DB {
+	db, err := gorm.Open(mysql.Open(getDBURL()), &gorm.Config{})
+	if err != nil {
+		panic("Cannot connect to Database" + err.Error())
+	}
+	return db
+}
+
+func getDBURL() string {
+
 	DB_USER := os.Getenv("DB_USER")
 	DB_PASSWORD := os.Getenv("DB_PASSWORD")
 	DB_HOST := os.Getenv("DB_HOST")
 	DB_NAME := os.Getenv("DB_NAME")
-
-	collection := dbcollection.NewDBCollection(dbcollection.DBVars{
-		DB_USER:     DB_USER,
-		DB_PASSWORD: DB_PASSWORD,
-		DB_HOST:     DB_HOST,
-		DB_NAME:     DB_NAME,
-	})
-	server.RunServer(port, &resolver.Resolver{
-		Collection: collection,
-	})
+	return fmt.Sprintf("%s:%s@tcp(%s)/%s", DB_USER, DB_PASSWORD, DB_HOST, DB_NAME)
 }
