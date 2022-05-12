@@ -9,5 +9,10 @@ func (dc *DBCollection) GetCharacters() ([]*model.Character, error) {
 }
 
 func (dc *DBCollection) CreateCharacter(newCharacter model.NewCharacter) (*model.Character, error) {
-	return nil, nil
+	character := model.Character{
+		Name:        newCharacter.Name,
+		Description: newCharacter.Description,
+	}
+	err := dc.DB.Create(&character).Error
+	return &character, err
 }
