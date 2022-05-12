@@ -39,7 +39,10 @@ func TestCharactersTable(t *testing.T) {
 			Name:        "Adam",
 			Description: "First Man",
 		}
-		character, _ := dc.CreateCharacter(newCharacter)
+		character, err := dc.CreateCharacter(newCharacter)
+		if err != nil && err.Error() == "character already exists" {
+			t.Skip()
+		}
 		if character.Name != newCharacter.Name {
 			t.Errorf("Character created incorrectly, wanted %s, got %s",
 				newCharacter.Name, character.Name)
