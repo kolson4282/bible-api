@@ -201,7 +201,8 @@ type Character {
 }
 
 input NewCharacter {
-  id: Int!
+  name: String!
+  description: String!
 }
 
 type Query {
@@ -2445,11 +2446,19 @@ func (ec *executionContext) unmarshalInputNewCharacter(ctx context.Context, obj 
 
 	for k, v := range asMap {
 		switch k {
-		case "id":
+		case "name":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			it.ID, err = ec.unmarshalNInt2int(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+			it.Name, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "description":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			it.Description, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}

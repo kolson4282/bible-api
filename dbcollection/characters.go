@@ -7,3 +7,7 @@ func (dc *DBCollection) GetCharacters() ([]*model.Character, error) {
 	dc.DB.Find(&characters)
 	return characters, nil
 }
+
+func (dc *DBCollection) CreateCharacter(newCharacter model.NewCharacter) (*model.Character, error) {
+	return nil, nil
+}

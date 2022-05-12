@@ -5,14 +5,13 @@ package resolver
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/kolson4282/tdd-bible-api/graph/generated"
 	"github.com/kolson4282/tdd-bible-api/graph/model"
 )
 
 func (r *mutationResolver) CreateCharacter(ctx context.Context, input model.NewCharacter) (*model.Character, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Collection.CreateCharacter(input)
 }
 
 func (r *queryResolver) Characters(ctx context.Context) ([]*model.Character, error) {

@@ -9,7 +9,8 @@ type Character {
 }
 
 input NewCharacter {
-  id: Int!
+  name: String!
+  description: String!
 }
 
 type Query {

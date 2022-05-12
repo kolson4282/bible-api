@@ -15,4 +15,9 @@ func TestCharactersTable(t *testing.T) {
 	if characters[0].ID != 1 {
 		t.Errorf("Wanted character ID 1, got %d", characters[0].ID)
 	}
+	for i, char := range characters {
+		if char.Name == "" {
+			t.Errorf("Invalid character name at postion %d", i)
+		}
+	}
 }
