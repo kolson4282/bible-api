@@ -55,7 +55,7 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Characters func(childComplexity int, id *int) int
+		Characters func(childComplexity int, id *int, name *string) int
 	}
 }
 
@@ -63,7 +63,7 @@ type MutationResolver interface {
 	CreateCharacter(ctx context.Context, input model.NewCharacter) (*model.Character, error)
 }
 type QueryResolver interface {
-	Characters(ctx context.Context, id *int) ([]*model.Character, error)
+	Characters(ctx context.Context, id *int, name *string) ([]*model.Character, error)
 }
 
 type executableSchema struct {
@@ -124,7 +124,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Characters(childComplexity, args["id"].(*int)), true
+		return e.complexity.Query.Characters(childComplexity, args["id"].(*int), args["name"].(*string)), true
 
 	}
 	return 0, false
@@ -211,7 +211,7 @@ input NewCharacter {
 }
 
 type Query {
-  characters(id: Int): [Character!]!
+  characters(id: Int, name: String): [Character!]!
 }
 
 type Mutation {
@@ -267,6 +267,15 @@ func (ec *executionContext) field_Query_characters_args(ctx context.Context, raw
 		}
 	}
 	args["id"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["name"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+		arg1, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["name"] = arg1
 	return args, nil
 }
 
@@ -517,7 +526,7 @@ func (ec *executionContext) _Query_characters(ctx context.Context, field graphql
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Characters(rctx, fc.Args["id"].(*int))
+		return ec.resolvers.Query().Characters(rctx, fc.Args["id"].(*int), fc.Args["name"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)

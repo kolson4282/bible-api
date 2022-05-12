@@ -53,18 +53,18 @@ func TestCharacters(t *testing.T) {
 		}
 		q := `
 		mutation{
-			createCharacter(input: {name: "adam", description: "first man"}) {
+			createCharacter(input: {name: "Adam", description: "First Man"}) {
 			  id
 			  name
 			  description
 			}
 		  }`
 		c.MustPost(q, &resp)
-		if resp.CreateCharacter.Name != "adam" {
-			t.Errorf("Name added incorrectly, got %s, want %s", resp.CreateCharacter.Name, "adam")
+		if resp.CreateCharacter.Name != "Adam" {
+			t.Errorf("Name added incorrectly, got %s, want %s", resp.CreateCharacter.Name, "Adam")
 		}
-		if resp.CreateCharacter.Description != "first man" {
-			t.Errorf("Description added incorrectly, got %s, want %s", resp.CreateCharacter.Description, "first man")
+		if resp.CreateCharacter.Description != "First Man" {
+			t.Errorf("Description added incorrectly, got %s, want %s", resp.CreateCharacter.Description, "First Man")
 		}
 	})
 
@@ -90,6 +90,31 @@ func TestCharacters(t *testing.T) {
 		}
 		if resp.Characters[0].ID != 1 {
 			t.Errorf("got the wrong ID. Expected 1, got %d", resp.Characters[0].ID)
+		}
+	})
+
+	t.Run("Get Characters by Name", func(t *testing.T) {
+		var resp struct {
+			Characters []struct {
+				ID          int
+				Name        string
+				Description string
+			}
+		}
+		q := `
+		{
+			characters (name: "Adam"){
+				id
+				name
+				description
+			}
+		}`
+		c.MustPost(q, &resp)
+		if len(resp.Characters) == 0 {
+			t.Fatalf("No Characters Returned")
+		}
+		if resp.Characters[0].Name != "Adam" {
+			t.Errorf("got the wrong Name. Expected Adam, got %s", resp.Characters[0].Name)
 		}
 	})
 }
@@ -138,6 +163,20 @@ func (mc *MockCollection) GetCharacterByID(id int) ([]*model.Character, error) {
 	}
 	if len(characters) == 0 {
 		return nil, errors.New("character at id not found")
+	}
+	return characters, nil
+}
+
+func (mc *MockCollection) GetCharacterByName(name string) ([]*model.Character, error) {
+	var characters []*model.Character
+	for _, char := range mc.characters {
+		if char.Name == name {
+			characters = append(characters, char)
+			break
+		}
+	}
+	if len(characters) == 0 {
+		return nil, errors.New("character at name not found")
 	}
 	return characters, nil
 }

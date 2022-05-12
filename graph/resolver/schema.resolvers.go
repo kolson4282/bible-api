@@ -14,11 +14,14 @@ func (r *mutationResolver) CreateCharacter(ctx context.Context, input model.NewC
 	return r.Collection.CreateCharacter(input)
 }
 
-func (r *queryResolver) Characters(ctx context.Context, id *int) ([]*model.Character, error) {
-	if id == nil {
-		return r.Collection.GetCharacters()
+func (r *queryResolver) Characters(ctx context.Context, id *int, name *string) ([]*model.Character, error) {
+	if id != nil {
+		return r.Collection.GetCharacterByID(*id)
 	}
-	return r.Collection.GetCharacterByID(*id)
+	if name != nil {
+		return r.Collection.GetCharacterByName(*name)
+	}
+	return r.Collection.GetCharacters()
 }
 
 // Mutation returns generated.MutationResolver implementation.

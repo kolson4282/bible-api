@@ -14,7 +14,7 @@ input NewCharacter {
 }
 
 type Query {
-  characters(id: Int): [Character!]!
+  characters(id: Int, name: String): [Character!]!
 }
 
 type Mutation {
