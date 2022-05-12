@@ -28,5 +28,7 @@ func (dc *DBCollection) CreateCharacter(newCharacter model.NewCharacter) (*model
 }
 
 func (dc *DBCollection) GetCharacterByID(id int) ([]*model.Character, error) {
-	return nil, nil
+	var characters []*model.Character
+	dc.DB.Where("id = ?", id).Find(&characters)
+	return characters, nil
 }

@@ -25,7 +25,7 @@ func NewDBCollection(DBVars DBVars) *DBCollection {
 	dc.DBVars = DBVars
 	dc.initialize()
 	dc.createTables()
-	dc.fillTables()
+	// dc.fillTables()
 	return dc
 }
 
@@ -44,13 +44,13 @@ func (dc *DBCollection) createTables() {
 	}
 }
 
-func (dc *DBCollection) fillTables() {
-	dc.DB.Create(&model.Character{
-		ID:          1,
-		Name:        "God",
-		Description: "God",
-	})
-}
+// func (dc *DBCollection) fillTables() {
+// 	dc.DB.Create(&model.Character{
+// 		ID:          1,
+// 		Name:        "God",
+// 		Description: "God",
+// 	})
+// }
 
 func (dc DBCollection) getDBURL() string {
 
