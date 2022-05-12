@@ -22,6 +22,7 @@ func TestCharacters(t *testing.T) {
 				ID          int
 				Name        string
 				Description string
+				Gender      string
 			}
 		}
 		q := `
@@ -30,6 +31,7 @@ func TestCharacters(t *testing.T) {
 				id
 				name
 				description
+				gender
 			}
 		}`
 		c.MustPost(q, &resp)
@@ -135,6 +137,7 @@ func NewMockCollection() *MockCollection {
 				ID:          2,
 				Name:        "Eve",
 				Description: "Eve",
+				Gender:      model.GenderFemale,
 			},
 		},
 	}

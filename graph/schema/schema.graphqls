@@ -2,15 +2,23 @@
 #
 # https://gqlgen.com/getting-started/
 
+enum Gender {
+  male
+  female
+  none
+}
+
 type Character {
   id: Int!
   name: String!
   description: String!
+  gender: Gender!
 }
 
 input NewCharacter {
   name: String!
   description: String!
+  gender: Gender
 }
 
 type Query {

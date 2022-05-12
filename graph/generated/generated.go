@@ -46,6 +46,7 @@ type DirectiveRoot struct {
 type ComplexityRoot struct {
 	Character struct {
 		Description func(childComplexity int) int
+		Gender      func(childComplexity int) int
 		ID          func(childComplexity int) int
 		Name        func(childComplexity int) int
 	}
@@ -87,6 +88,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Character.Description(childComplexity), true
+
+	case "Character.gender":
+		if e.complexity.Character.Gender == nil {
+			break
+		}
+
+		return e.complexity.Character.Gender(childComplexity), true
 
 	case "Character.id":
 		if e.complexity.Character.ID == nil {
@@ -199,15 +207,23 @@ var sources = []*ast.Source{
 #
 # https://gqlgen.com/getting-started/
 
+enum Gender {
+  male
+  female
+  none
+}
+
 type Character {
   id: Int!
   name: String!
   description: String!
+  gender: Gender!
 }
 
 input NewCharacter {
   name: String!
   description: String!
+  gender: Gender
 }
 
 type Query {
@@ -449,6 +465,50 @@ func (ec *executionContext) fieldContext_Character_description(ctx context.Conte
 	return fc, nil
 }
 
+func (ec *executionContext) _Character_gender(ctx context.Context, field graphql.CollectedField, obj *model.Character) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Character_gender(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Gender, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.Gender)
+	fc.Result = res
+	return ec.marshalNGender2githubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Character_gender(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Character",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Gender does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation_createCharacter(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_createCharacter(ctx, field)
 	if err != nil {
@@ -494,6 +554,8 @@ func (ec *executionContext) fieldContext_Mutation_createCharacter(ctx context.Co
 				return ec.fieldContext_Character_name(ctx, field)
 			case "description":
 				return ec.fieldContext_Character_description(ctx, field)
+			case "gender":
+				return ec.fieldContext_Character_gender(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Character", field.Name)
 		},
@@ -557,6 +619,8 @@ func (ec *executionContext) fieldContext_Query_characters(ctx context.Context, f
 				return ec.fieldContext_Character_name(ctx, field)
 			case "description":
 				return ec.fieldContext_Character_description(ctx, field)
+			case "gender":
+				return ec.fieldContext_Character_gender(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Character", field.Name)
 		},
@@ -2502,6 +2566,14 @@ func (ec *executionContext) unmarshalInputNewCharacter(ctx context.Context, obj 
 			if err != nil {
 				return it, err
 			}
+		case "gender":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("gender"))
+			it.Gender, err = ec.unmarshalOGender2ᚖgithubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		}
 	}
 
@@ -2543,6 +2615,13 @@ func (ec *executionContext) _Character(ctx context.Context, sel ast.SelectionSet
 		case "description":
 
 			out.Values[i] = ec._Character_description(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "gender":
+
+			out.Values[i] = ec._Character_gender(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
@@ -3053,6 +3132,16 @@ func (ec *executionContext) marshalNCharacter2ᚖgithubᚗcomᚋkolson4282ᚋtdd
 	return ec._Character(ctx, sel, v)
 }
 
+func (ec *executionContext) unmarshalNGender2githubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, v interface{}) (model.Gender, error) {
+	var res model.Gender
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNGender2githubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, sel ast.SelectionSet, v model.Gender) graphql.Marshaler {
+	return v
+}
+
 func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
 	res, err := graphql.UnmarshalInt(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -3365,6 +3454,22 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	}
 	res := graphql.MarshalBoolean(*v)
 	return res
+}
+
+func (ec *executionContext) unmarshalOGender2ᚖgithubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, v interface{}) (*model.Gender, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var res = new(model.Gender)
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOGender2ᚖgithubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, sel ast.SelectionSet, v *model.Gender) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return v
 }
 
 func (ec *executionContext) unmarshalOInt2ᚖint(ctx context.Context, v interface{}) (*int, error) {
