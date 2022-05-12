@@ -16,3 +16,7 @@ func (dc *DBCollection) CreateCharacter(newCharacter model.NewCharacter) (*model
 	err := dc.DB.Create(&character).Error
 	return &character, err
 }
+
+func (dc *DBCollection) GetCharacterByID(id int) ([]*model.Character, error) {
+	return nil, nil
+}

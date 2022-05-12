@@ -51,6 +51,5 @@ func TestCharactersTable(t *testing.T) {
 		if !found {
 			t.Error("Character not added to list of all characters")
 		}
-
 	})
 }

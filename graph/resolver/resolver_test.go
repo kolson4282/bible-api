@@ -1,6 +1,7 @@
 package resolver_test
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/99designs/gqlgen/client"
@@ -12,7 +13,7 @@ import (
 
 func TestCharacters(t *testing.T) {
 	c := client.New(handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolver.Resolver{
-		Collection: &MockCollection{},
+		Collection: NewMockCollection(),
 	}})))
 
 	t.Run("Get All Characters", func(t *testing.T) {
@@ -67,26 +68,76 @@ func TestCharacters(t *testing.T) {
 		}
 	})
 
+	t.Run("Get Characters by ID", func(t *testing.T) {
+		var resp struct {
+			Characters []struct {
+				ID          int
+				Name        string
+				Description string
+			}
+		}
+		q := `
+		{
+			characters (id: 1){
+				id
+				name
+				description
+			}
+		}`
+		c.MustPost(q, &resp)
+		if len(resp.Characters) != 1 {
+			t.Errorf("incorrect number of characters returned. Expected 1, got %d", len(resp.Characters))
+		}
+		if resp.Characters[0].ID != 1 {
+			t.Errorf("got the wrong ID. Expected 1, got %d", resp.Characters[0].ID)
+		}
+	})
 }
 
 type MockCollection struct {
+	characters []*model.Character
 }
 
-func (mc *MockCollection) GetCharacters() ([]*model.Character, error) {
-	return []*model.Character{
-		{
-			ID:          1,
-			Name:        "God",
-			Description: "God",
+func NewMockCollection() *MockCollection {
+	return &MockCollection{
+		characters: []*model.Character{
+			{
+				ID:          1,
+				Name:        "God",
+				Description: "God",
+			},
+			{
+				ID:          2,
+				Name:        "Eve",
+				Description: "Eve",
+			},
 		},
-	}, nil
+	}
+}
+func (mc *MockCollection) GetCharacters() ([]*model.Character, error) {
+	return mc.characters, nil
 }
 
 func (mc *MockCollection) CreateCharacter(newCharacter model.NewCharacter) (*model.Character, error) {
 	character := model.Character{
-		ID:          -1,
+		ID:          2,
 		Name:        newCharacter.Name,
 		Description: newCharacter.Description,
 	}
+	mc.characters = append(mc.characters, &character)
 	return &character, nil
+}
+
+func (mc *MockCollection) GetCharacterByID(id int) ([]*model.Character, error) {
+	var characters []*model.Character
+	for _, char := range mc.characters {
+		if char.ID == id {
+			characters = append(characters, char)
+			break
+		}
+	}
+	if len(characters) == 0 {
+		return nil, errors.New("character at id not found")
+	}
+	return characters, nil
 }
