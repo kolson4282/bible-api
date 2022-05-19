@@ -22,3 +22,7 @@ func (dc *DBCollection) createTables() {
 		panic("error creating tables" + err.Error())
 	}
 }
+
+func (dc *DBCollection) GetBooks() ([]*model.Book, error) {
+	panic("Not Implemented!")
+}
