@@ -6,8 +6,8 @@ package resolver
 import (
 	"context"
 
-	"github.com/kolson4282/tdd-bible-api/graph/generated"
-	"github.com/kolson4282/tdd-bible-api/graph/model"
+	"github.com/kolson4282/bible-api/graph/generated"
+	"github.com/kolson4282/bible-api/graph/model"
 )
 
 func (r *mutationResolver) CreateCharacter(ctx context.Context, input model.NewCharacter) (*model.Character, error) {

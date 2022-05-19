@@ -3,7 +3,7 @@ package dbcollection
 import (
 	"errors"
 
-	"github.com/kolson4282/tdd-bible-api/graph/model"
+	"github.com/kolson4282/bible-api/graph/model"
 )
 
 func (dc *DBCollection) GetCharacters() ([]*model.Character, error) {

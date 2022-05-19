@@ -1,7 +1,7 @@
 package dbcollection
 
 import (
-	"github.com/kolson4282/tdd-bible-api/graph/model"
+	"github.com/kolson4282/bible-api/graph/model"
 	"gorm.io/gorm"
 )
 

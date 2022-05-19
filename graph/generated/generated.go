@@ -13,7 +13,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/kolson4282/tdd-bible-api/graph/model"
+	"github.com/kolson4282/bible-api/graph/model"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -247,7 +247,7 @@ func (ec *executionContext) field_Mutation_createCharacter_args(ctx context.Cont
 	var arg0 model.NewCharacter
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewCharacter2githubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐNewCharacter(ctx, tmp)
+		arg0, err = ec.unmarshalNNewCharacter2githubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐNewCharacter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -493,7 +493,7 @@ func (ec *executionContext) _Character_gender(ctx context.Context, field graphql
 	}
 	res := resTmp.(model.Gender)
 	fc.Result = res
-	return ec.marshalNGender2githubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx, field.Selections, res)
+	return ec.marshalNGender2githubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐGender(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Character_gender(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -537,7 +537,7 @@ func (ec *executionContext) _Mutation_createCharacter(ctx context.Context, field
 	}
 	res := resTmp.(*model.Character)
 	fc.Result = res
-	return ec.marshalNCharacter2ᚖgithubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐCharacter(ctx, field.Selections, res)
+	return ec.marshalNCharacter2ᚖgithubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐCharacter(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createCharacter(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -602,7 +602,7 @@ func (ec *executionContext) _Query_characters(ctx context.Context, field graphql
 	}
 	res := resTmp.([]*model.Character)
 	fc.Result = res
-	return ec.marshalNCharacter2ᚕᚖgithubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐCharacterᚄ(ctx, field.Selections, res)
+	return ec.marshalNCharacter2ᚕᚖgithubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐCharacterᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_characters(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2570,7 +2570,7 @@ func (ec *executionContext) unmarshalInputNewCharacter(ctx context.Context, obj 
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("gender"))
-			it.Gender, err = ec.unmarshalOGender2ᚖgithubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx, v)
+			it.Gender, err = ec.unmarshalOGender2ᚖgithubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐGender(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -3074,11 +3074,11 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalNCharacter2githubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐCharacter(ctx context.Context, sel ast.SelectionSet, v model.Character) graphql.Marshaler {
+func (ec *executionContext) marshalNCharacter2githubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐCharacter(ctx context.Context, sel ast.SelectionSet, v model.Character) graphql.Marshaler {
 	return ec._Character(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCharacter2ᚕᚖgithubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐCharacterᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Character) graphql.Marshaler {
+func (ec *executionContext) marshalNCharacter2ᚕᚖgithubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐCharacterᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Character) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -3102,7 +3102,7 @@ func (ec *executionContext) marshalNCharacter2ᚕᚖgithubᚗcomᚋkolson4282ᚋ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCharacter2ᚖgithubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐCharacter(ctx, sel, v[i])
+			ret[i] = ec.marshalNCharacter2ᚖgithubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐCharacter(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3122,7 +3122,7 @@ func (ec *executionContext) marshalNCharacter2ᚕᚖgithubᚗcomᚋkolson4282ᚋ
 	return ret
 }
 
-func (ec *executionContext) marshalNCharacter2ᚖgithubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐCharacter(ctx context.Context, sel ast.SelectionSet, v *model.Character) graphql.Marshaler {
+func (ec *executionContext) marshalNCharacter2ᚖgithubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐCharacter(ctx context.Context, sel ast.SelectionSet, v *model.Character) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -3132,13 +3132,13 @@ func (ec *executionContext) marshalNCharacter2ᚖgithubᚗcomᚋkolson4282ᚋtdd
 	return ec._Character(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNGender2githubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, v interface{}) (model.Gender, error) {
+func (ec *executionContext) unmarshalNGender2githubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, v interface{}) (model.Gender, error) {
 	var res model.Gender
 	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNGender2githubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, sel ast.SelectionSet, v model.Gender) graphql.Marshaler {
+func (ec *executionContext) marshalNGender2githubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, sel ast.SelectionSet, v model.Gender) graphql.Marshaler {
 	return v
 }
 
@@ -3157,7 +3157,7 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) unmarshalNNewCharacter2githubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐNewCharacter(ctx context.Context, v interface{}) (model.NewCharacter, error) {
+func (ec *executionContext) unmarshalNNewCharacter2githubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐNewCharacter(ctx context.Context, v interface{}) (model.NewCharacter, error) {
 	res, err := ec.unmarshalInputNewCharacter(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -3456,7 +3456,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) unmarshalOGender2ᚖgithubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, v interface{}) (*model.Gender, error) {
+func (ec *executionContext) unmarshalOGender2ᚖgithubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, v interface{}) (*model.Gender, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -3465,7 +3465,7 @@ func (ec *executionContext) unmarshalOGender2ᚖgithubᚗcomᚋkolson4282ᚋtdd�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOGender2ᚖgithubᚗcomᚋkolson4282ᚋtddᚑbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, sel ast.SelectionSet, v *model.Gender) graphql.Marshaler {
+func (ec *executionContext) marshalOGender2ᚖgithubᚗcomᚋkolson4282ᚋbibleᚑapiᚋgraphᚋmodelᚐGender(ctx context.Context, sel ast.SelectionSet, v *model.Gender) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

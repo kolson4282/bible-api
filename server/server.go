@@ -7,8 +7,8 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi"
-	"github.com/kolson4282/tdd-bible-api/graph/generated"
-	"github.com/kolson4282/tdd-bible-api/graph/resolver"
+	"github.com/kolson4282/bible-api/graph/generated"
+	"github.com/kolson4282/bible-api/graph/resolver"
 	"github.com/rs/cors"
 )
 

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kolson4282/tdd-bible-api/dbcollection"
-	"github.com/kolson4282/tdd-bible-api/graph/resolver"
-	"github.com/kolson4282/tdd-bible-api/server"
-	"github.com/kolson4282/tdd-bible-api/utils"
+	"github.com/kolson4282/bible-api/dbcollection"
+	"github.com/kolson4282/bible-api/graph/resolver"
+	"github.com/kolson4282/bible-api/server"
+	"github.com/kolson4282/bible-api/utils"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

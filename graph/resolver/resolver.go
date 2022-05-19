@@ -1,6 +1,6 @@
 package resolver
 
-import "github.com/kolson4282/tdd-bible-api/graph/model"
+import "github.com/kolson4282/bible-api/graph/model"
 
 //go:generate go run github.com/99designs/gqlgen generate
 

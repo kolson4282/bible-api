@@ -5,8 +5,8 @@ package dbcollection_test
 import (
 	"testing"
 
-	"github.com/kolson4282/tdd-bible-api/dbcollection"
-	"github.com/kolson4282/tdd-bible-api/graph/model"
+	"github.com/kolson4282/bible-api/dbcollection"
+	"github.com/kolson4282/bible-api/graph/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

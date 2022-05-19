@@ -6,9 +6,9 @@ import (
 
 	"github.com/99designs/gqlgen/client"
 	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/kolson4282/tdd-bible-api/graph/generated"
-	"github.com/kolson4282/tdd-bible-api/graph/model"
-	"github.com/kolson4282/tdd-bible-api/graph/resolver"
+	"github.com/kolson4282/bible-api/graph/generated"
+	"github.com/kolson4282/bible-api/graph/model"
+	"github.com/kolson4282/bible-api/graph/resolver"
 )
 
 func TestCharacters(t *testing.T) {
