@@ -1,2 +1,4 @@
 .env
 *.exe
+*.cnf
+mysql-init-complete

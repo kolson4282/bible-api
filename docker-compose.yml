@@ -1,9 +1,12 @@
 version: "3"
 services:
   db:
-    image: mysql/mysql-server:latest
+    build:
+      dockerfile: ./mysql/Dockerfile
     ports:
       - "3305:3306"
+    volumes:
+      - "/var/lib/mysql-files"
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
       - "MYSQL_USER=${DB_USER}"

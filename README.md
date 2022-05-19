@@ -6,7 +6,7 @@ Bible API to get bible character data based on chapter and location. See graph/s
 
 ## Database Setup:
 
-run `docker compose up` to start mysql database. Need to have a .env file with the following (can change values, this is just for example):
+run `docker compose up -d db --build` to start mysql database. Need to have a .env file with the following (can change values, this is just for example):
 
 ```
 MYSQL_ROOT_PASSWORD= root
