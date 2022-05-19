@@ -8,6 +8,12 @@ import (
 	"strconv"
 )
 
+type Book struct {
+	ID       int    `json:"id"`
+	Title    string `json:"title"`
+	Chapters int    `json:"chapters"`
+}
+
 type Character struct {
 	ID          int    `json:"id"`
 	Name        string `json:"name"`

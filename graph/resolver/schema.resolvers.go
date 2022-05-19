@@ -24,6 +24,10 @@ func (r *queryResolver) Characters(ctx context.Context, id *int, name *string) (
 	return r.Collection.GetCharacters()
 }
 
+func (r *queryResolver) Books(ctx context.Context) ([]*model.Book, error) {
+	return r.Collection.GetBooks()
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 

@@ -13,6 +13,8 @@ type Collection interface {
 	GetCharacterByID(id int) ([]*model.Character, error)
 	GetCharacterByName(name string) ([]*model.Character, error)
 	CreateCharacter(model.NewCharacter) (*model.Character, error)
+
+	GetBooks() ([]*model.Book, error)
 }
 
 type Resolver struct {

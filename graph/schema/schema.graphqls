@@ -21,8 +21,15 @@ input NewCharacter {
   gender: Gender
 }
 
+type Book {
+  id: Int!
+  title: String!
+  chapters: Int!
+}
+
 type Query {
   characters(id: Int, name: String): [Character!]!
+  books: [Book!]!
 }
 
 type Mutation {
