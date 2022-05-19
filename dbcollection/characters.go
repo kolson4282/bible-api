@@ -16,6 +16,7 @@ func (dc *DBCollection) CreateCharacter(newCharacter model.NewCharacter) (*model
 	character := model.Character{
 		Name:        newCharacter.Name,
 		Description: newCharacter.Description,
+		Gender:      *newCharacter.Gender,
 	}
 	allCharacters, _ := dc.GetCharacters()
 	for _, char := range allCharacters {
